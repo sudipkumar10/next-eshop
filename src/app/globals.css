@@ -5,144 +5,57 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: #f8faf9;
+  --background: #f4f6f5;
   --foreground: #111827;
   --card: #ffffff;
   --card-foreground: #111827;
   --popover: #ffffff;
   --popover-foreground: #111827;
 
-  /* Primary E-commerce Green Theme */
-  --primary: #1b4d3e;
+  /* Strict Color Implementation */
+  --primary: #2c825e; /* Light Green for Base Header */
   --primary-foreground: #ffffff;
 
-  --secondary: #e6efec;
-  --secondary-foreground: #1b4d3e;
-  --muted: #f1f5f4;
-  --muted-foreground: #6b7280;
+  --secondary: #408e6d; /* Light Green for Search & Buttons */
+  --secondary-foreground: #ffffff;
 
-  /* Accent Yellow for Badges / Offers */
-  --accent: #f59e0b;
-  --accent-foreground: #ffffff;
+  --accent: #ffdd54; /* Light Yellow */
+  --accent-foreground: #111827;
 
   --destructive: #ef4444;
   --destructive-foreground: #ffffff;
   --border: #e2e8f0;
   --input: #e2e8f0;
-  --ring: #1b4d3e;
-
-  /* Chart Colors matching nature/green vibe */
-  --chart-1: #1b4d3e;
-  --chart-2: #f59e0b;
-  --chart-3: #10b981;
-  --chart-4: #3b82f6;
-  --chart-5: #6366f1;
-
-  --sidebar: #ffffff;
-  --sidebar-foreground: #111827;
-  --sidebar-primary: #1b4d3e;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #e6efec;
-  --sidebar-accent-foreground: #1b4d3e;
-  --sidebar-border: #e2e8f0;
-  --sidebar-ring: #1b4d3e;
-
-  --font-sans: Geist, sans-serif;
-  --font-serif: Georgia, serif;
-  --font-mono: Geist Mono, monospace;
+  --ring: #408e6d;
   --radius: 0.75rem;
-}
-
-.dark {
-  --background: #0d1512;
-  --foreground: #f3f4f6;
-  --card: #13221c;
-  --card-foreground: #f3f4f6;
-  --popover: #13221c;
-  --popover-foreground: #f3f4f6;
-
-  --primary: #2e7d63;
-  --primary-foreground: #ffffff;
-
-  --secondary: #1f382f;
-  --secondary-foreground: #f3f4f6;
-  --muted: #182822;
-  --muted-foreground: #9ca3af;
-
-  --accent: #fbbf24;
-  --accent-foreground: #0d1512;
-
-  --destructive: #f87171;
-  --destructive-foreground: #0d1512;
-  --border: #233b32;
-  --input: #233b32;
-  --ring: #2e7d63;
-
-  --chart-1: #2e7d63;
-  --chart-2: #fbbf24;
-  --chart-3: #34d399;
-  --chart-4: #60a5fa;
-  --chart-5: #818cf8;
-
-  --sidebar: #13221c;
-  --sidebar-foreground: #f3f4f6;
-  --sidebar-primary: #2e7d63;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #1f382f;
-  --sidebar-accent-foreground: #f3f4f6;
-  --sidebar-border: #233b32;
-  --sidebar-ring: #2e7d63;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
+  --color-card-foreground: var(--color-card-foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
   --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
-
-  --font-sans: var(--font-sans);
-  --font-mono: var(--font-mono);
-  --font-serif: var(--font-serif);
-
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
 }
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    border-color: var(--border);
   }
   body {
-    @apply bg-background text-foreground antialiased;
+    background-color: var(--background);
+    color: var(--foreground);
+  }
+}
+
+@layer components {
+  .badge-sale {
+    @apply bg-[#FFDD54] text-green-600 font-bold text-[10px] px-2.5 py-0.5 rounded-full hover:bg-[#FEF9C3] border-0 shadow-2xs;
   }
 }
