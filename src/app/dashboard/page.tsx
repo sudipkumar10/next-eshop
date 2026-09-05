@@ -1,9 +1,7 @@
-"use client";
-
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { authClient } from "@/lib/auth-client";
-import { Button } from "@/components/ui/button";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
+import { SignOutButton } from "@/components/auth/SignOutButton";
 import {
   Card,
   CardContent,
@@ -11,30 +9,16 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import toast from "react-hot-toast";
 
-export default function DashboardPage() {
-  const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
+export default async function DashboardPage() {
+  // Absolute secure server-side session validation
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
 
-  const handleSignOut = async () => {
-    setIsLoading(true);
-    try {
-      const { error } = await authClient.signOut();
-
-      if (error) {
-        toast.error(error.message || "Failed to sign out.");
-        return;
-      }
-
-      toast.success("Signed out successfully!");
-      router.push("/sign-in");
-    } catch (err: any) {
-      toast.error(err?.message || "An unexpected error occurred.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  if (!session) {
+    redirect("/sign-in");
+  }
 
   return (
     <div className="flex min-h-screen w-full items-center justify-center px-4 bg-muted/40">
@@ -42,21 +26,17 @@ export default function DashboardPage() {
         <CardHeader>
           <CardTitle className="text-2xl">Dashboard</CardTitle>
           <CardDescription>
-            Welcome to your <strong>next-eshop</strong> dashboard
+            Welcome back, <strong>{session.user.name}</strong>
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           <p className="text-sm text-muted-foreground">
-            You are successfully logged in and authenticated.
+            Logged in as:{" "}
+            <span className="font-medium text-foreground">
+              {session.user.email}
+            </span>
           </p>
-          <Button
-            variant="destructive"
-            onClick={handleSignOut}
-            className="w-full mt-2"
-            disabled={isLoading}
-          >
-            {isLoading ? "Signing out..." : "Sign Out"}
-          </Button>
+          <SignOutButton />
         </CardContent>
       </Card>
     </div>
