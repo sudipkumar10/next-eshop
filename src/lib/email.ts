@@ -10,15 +10,17 @@ interface SendEmailParams {
 
 export const sendEmail = async ({ to, subject, html }: SendEmailParams) => {
   try {
+    console.log("Sending email to:", to);
     const data = await resend.emails.send({
-      from: "Next E-Shop <onboarding@resend.dev>",
+      from: "Next e-Shop <onboarding@resend.dev>",
       to,
       subject,
       html,
     });
+    console.log("Resend response:", data);
     return { success: true, data };
   } catch (error) {
-    console.error("Failed to send email:", error);
+    console.error("Resend error:", error);
     return { success: false, error };
   }
 };

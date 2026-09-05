@@ -11,27 +11,35 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
   },
+  socialProviders: {
+    google: {
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+    },
+    github: {
+      clientId: process.env.GITHUB_CLIENT_ID as string,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
+    },
+  },
   plugins: [
     emailOTP({
       otpLength: 6,
-      expiresIn: 300, // 5 minutes
+      expiresIn: 300,
+      allowedAttempts: 3,
       async sendVerificationOTP({ email, otp, type }) {
         if (type === "sign-in") {
-          // Send the OTP for sign in
           void sendEmail({
             to: email,
             subject: "Your Sign-In OTP",
             html: `<div><p>Your sign-in code is:</p><h1>${otp}</h1></div>`,
           });
         } else if (type === "email-verification") {
-          // Send the OTP for email verification
           void sendEmail({
             to: email,
             subject: "Verify your email address",
             html: `<div><p>Your email verification code is:</p><h1>${otp}</h1></div>`,
           });
         } else {
-          // Send the OTP for password reset
           void sendEmail({
             to: email,
             subject: "Reset your password",
